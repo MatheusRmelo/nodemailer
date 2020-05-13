@@ -1,6 +1,6 @@
 const app = require('express')()
 const bodyParser = require('body-parser')
-
+const cors = require('cors')
 const mailer = require('nodemailer')
 
 const config = {
@@ -8,8 +8,8 @@ const config = {
     port: 25,
     secure: false,
     auth: {
-        user: '',
-        pass: ''
+        user: 'd5145fe0c5957e',
+        pass: 'b88ce34fc3382c'
     },
     tls: {
         // do not fail on invalid certs
@@ -19,7 +19,7 @@ const config = {
 
 const transporter = mailer.createTransport(config)
 
-
+app.use(cors())
 app.use(bodyParser.json())
 
 app.post('/send-email', (req, res) => {
@@ -41,7 +41,10 @@ app.post('/send-email', (req, res) => {
     })
    
 })
+app.get('/users', (req, res)=>{
+    res.status(200).send('Entrou')
+})
 
-app.listen(3001, () => {
-    console.log('Servidor executando na porta 3001')
+app.listen(3333, () => {
+    console.log('Servidor executando na porta 3333')
 })
