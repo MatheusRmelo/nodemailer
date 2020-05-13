@@ -8,8 +8,8 @@ const config = {
     port: 25,
     secure: false,
     auth: {
-        user: 'd5145fe0c5957e',
-        pass: 'b88ce34fc3382c'
+        user: '',
+        pass: ''
     },
     tls: {
         // do not fail on invalid certs
