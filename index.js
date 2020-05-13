@@ -1,0 +1,47 @@
+const app = require('express')()
+const bodyParser = require('body-parser')
+
+const mailer = require('nodemailer')
+
+const config = {
+    host: 'smtp.mailtrap.io',
+    port: 25,
+    secure: false,
+    auth: {
+        user: '',
+        pass: ''
+    },
+    tls: {
+        // do not fail on invalid certs
+        rejectUnauthorized: false
+    },
+}
+
+const transporter = mailer.createTransport(config)
+
+
+app.use(bodyParser.json())
+
+app.post('/send-email', (req, res) => {
+    const message = {
+        from: "matheusroberttjmelo@gmail.com",
+        to: "matheusroberttjmelo@gmail.com",
+        subject: 'Contato Jobin Softwares',
+        text: `Nome: ${req.body.name} 
+               E-mail: ${req.body.email}
+               Telefone: ${req.body.telefone}
+               Mensagem: ${req.body.message} `
+    }
+
+    transporter.sendMail(message, (error, info) => {
+        if(error){
+            return res.status(400).send(info)
+        }
+        return res.status(200).send('E-mail enviado com sucesso!')
+    })
+   
+})
+
+app.listen(3001, () => {
+    console.log('Servidor executando na porta 3001')
+})
